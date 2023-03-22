@@ -1,9 +1,9 @@
-// p5.disableFriendlyErrors = true;
+p5.disableFriendlyErrors = true;
 
 let myShader;
 let COLS = 800;
 let breakPoints = [];
-let threshold = 1;
+let threshold = 0.5;
 let wasPreviouslyPressed = false;
 let clickIsBlocked = false;
 
@@ -11,15 +11,17 @@ let customShape;
 
 function preload(){
   myShader = loadShader('./basic.vert', './gradient.frag');
-  // customShape = loadImage('./Sample text.svg');//, populateFromSVG, customShape);
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   noLoop();
   noStroke();
-
-  let colSlider = createSlider(1,1000,COLS,1);
+  
+  
+  //resolution
+  // COLS = width;
+  let colSlider = createSlider(1,1000,width,1);
   colSlider.position(20, 30);
   colSlider.changed(changeCols);
   colSlider.mouseOver(blockClicks);
@@ -62,21 +64,10 @@ function draw() {
     }
   }
 
-
-  // if (mouseIsPressed === true){
-  //   push();
-  //   noFill();
-  //   stroke(0,255,0);
-  //   strokeWeight(4);
-  //   beginShape();
-  //   for (let p of breakPoints) point(p.x,p.y);
-  //   endShape();
-  //   pop();
-  // }
 }
 
 function keyPressed() {
-  if (key == ' ') save('Gradient_mosaic.jpg');
+  if (key == ' ') save('Gradient_drawing.jpg');
   if (key == '1') pixelDensity(1); redraw();
   if (key == '2') pixelDensity(2); redraw();
   if (key == '3') pixelDensity(3); redraw();
@@ -92,6 +83,7 @@ function windowResized(){
 
 function changeCols(){
   COLS = floor(this.value());
+  threshold = width/COLS;
   redraw();
 }
 
@@ -106,7 +98,7 @@ function mousePressed(){
 
 function mouseDragged(){
   if(clickIsBlocked)return;
-  //проверить была ли кнопка зажата в предыдущем фрейме. если нет, поставить точку
+  //check if the button were pressed in previous frame. if not — add a breakpoint
   if (!wasPreviouslyPressed) {
     breakPoints.push(new p5.Vector(mouseX, mouseY));
     wasPreviouslyPressed = true;
@@ -114,12 +106,12 @@ function mouseDragged(){
     return;
   }
 
-  //если да, посмотреть где стоит предыдущая точка в массиве, проверить расстояние от нее до курсора;
+  //if yes — check the dist to previous breakpoint;
   let prev = breakPoints.at(-1);
   let curr = new p5.Vector(mouseX, mouseY);
   let d = distSquared(prev, curr);
 
-  //если расстояние меньше порогового — ничего не делаем.
+  //if it's less than threshold — do nothing.
   if (dist < threshold*threshold) return;
 
   //если больше — смотрим на округленное значение расстояние/порог и рисуем столько точек, сколько наокругляли
