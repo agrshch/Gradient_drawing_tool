@@ -6,11 +6,20 @@ varying vec2 vTexCoord;
 uniform vec3 u_pts [MAX];
 uniform int u_pts_n;
 uniform vec2 u_resolution;
+uniform vec3 u_colors[6];
 
 vec2 pointOnLineWithX(float x, vec2 a, vec2 b) {
    float m = (b.y - a.y) / (b.x - a.x);
    float y = m * (x - a.x) + a.y;
    return vec2(x, y);
+}
+
+vec3 getColorByIndex(float val){
+  int index = int(mod(val,6.));
+  for(int i = 0; i < 6; i++){
+    if(i == index) return u_colors[i];
+  }
+  return(vec3(0.0));
 }
 
 void main() {
@@ -25,6 +34,7 @@ void main() {
         bottomClosest = vec2 (pix.x, 1.0);
   float topRecord = pix.y, 
         bottomRecord = 1.0 - pix.y;
+  float colorIndex = 0.0;
   for (int i = 1; i < MAX; i++){
     if(i>=u_pts_n) break;
     if (u_pts[i-1].z != u_pts[i].z) continue;
@@ -37,10 +47,12 @@ void main() {
     vec2 intersection = pointOnLineWithX(pix.x, a, b);
     // is it higher or lower?
     if (intersection.y <= pix.y) { // higher
+      // colorIndex +=2.;
       //if it hits the record
       if(pix.y - intersection.y < topRecord) {
         topRecord = pix.y - intersection.y;
         topClosest = intersection;
+        colorIndex = u_pts[i].z;
       }
     } else { // lower
       //if it hits the record
@@ -59,7 +71,9 @@ void main() {
   float t = distTop / (distTop+distBottom);
 
   // 08. interpolate between two colors using t
-  vec3 gradient = mix(vec3(0.0), vec3(1.0), t);
+  vec3 c1 = getColorByIndex(colorIndex) / 255.;
+  vec3 c2 = getColorByIndex(colorIndex+1.0) / 255.;
+  vec3 gradient = mix(c1, c2, t);
 
   gl_FragColor = vec4(gradient, 1.0 );
 }

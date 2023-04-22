@@ -5,6 +5,15 @@ let gradientShader,
     segmentCounter = 0,
     clickIsBlocked = false;
 
+let colors = [
+  255,0,0,
+  0,0,255,
+  255,255,0,
+  0,255,255,
+  0,0,0,
+  255,255,255
+];
+
 function preload(){
   gradientShader = loadShader('./basic.vert', './gradient.frag');
 }
@@ -13,7 +22,7 @@ function setup() {
   CNV_DIV = select('#canvas_div');
   CNV = createCanvas(CNV_DIV.width, CNV_DIV.height, WEBGL);
   CNV.parent(CNV_DIV);
-  CNV.mousePressed(()=> segmentCounter++);
+  CNV.mousePressed(()=> segmentCounter+=2);
 
   let clearButton = select('#clear_btn');
   clearButton.mousePressed(()=> {PTS=[];redraw()});
@@ -29,6 +38,7 @@ function draw() {
   gradientShader.setUniform('u_pts', PTS);
   gradientShader.setUniform('u_pts_n', floor(PTS.length/3));
   gradientShader.setUniform('u_resolution', [width,height]);
+  gradientShader.setUniform('u_colors', colors);
   rect(0,0,width,height);
 }
 
