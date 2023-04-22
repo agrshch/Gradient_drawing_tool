@@ -47,12 +47,12 @@ void main() {
     vec2 intersection = pointOnLineWithX(pix.x, a, b);
     // is it higher or lower?
     if (intersection.y <= pix.y) { // higher
-      // colorIndex +=2.;
+      // colorIndex +=2.; // color is changing depending on number of intersections
       //if it hits the record
       if(pix.y - intersection.y < topRecord) {
         topRecord = pix.y - intersection.y;
         topClosest = intersection;
-        colorIndex = u_pts[i].z;
+        colorIndex = u_pts[i].z; // color is changing from line to line
       }
     } else { // lower
       //if it hits the record
