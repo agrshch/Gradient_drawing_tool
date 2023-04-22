@@ -1,5 +1,6 @@
 let gradientShader,
     CNV,
+    CNV_DIV,
     PTS = [],
     segmentCounter = 0,
     clickIsBlocked = false;
@@ -9,16 +10,15 @@ function preload(){
 }
 
 function setup() {
-  CNV = createCanvas(windowWidth, windowHeight, WEBGL);
-  CNV.parent(select('#cnv_div'));
-  noLoop();
+  CNV_DIV = select('#canvas_div');
+  CNV = createCanvas(CNV_DIV.width, CNV_DIV.height, WEBGL);
+  CNV.parent(CNV_DIV);
+  CNV.mousePressed(()=> segmentCounter++);
 
-  let clearButton = createButton('clear');
-  // clearButton.parent(select('#settings_div'))
-  clearButton.position(20, 20);
-  clearButton.mousePressed(()=> PTS=[]);
-  clearButton.mouseOver(blockClicks);
-  clearButton.mouseOut(unblockClicks);
+  let clearButton = select('#clear_btn');
+  clearButton.mousePressed(()=> {PTS=[];redraw()});
+
+  noLoop();
 }
 
 function draw() {
@@ -37,38 +37,13 @@ function keyPressed() {
 }
 
 function windowResized(){
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(CNV_DIV.width, CNV_DIV.height);
   redraw();
-}
-
-//add PTS
-function mousePressed(){
-  if(clickIsBlocked)return;
-  segmentCounter++;
 }
 
 function mouseDragged(){
-  if(clickIsBlocked)return;
+  if(mouseX<0 || mouseX>width || mouseY<0 || mouseY>height) return false; //mouse isn't over canvas, return
   PTS.push(mouseX, mouseY,segmentCounter);
   redraw();
-}
-
-function mouseReleased(){
-  redraw();
-  wasPreviouslyPressed = false;
-}
-
-function distSquared(a,b){
-  let dx = a.x - b.x;
-  let dy = a.y - b.y;
-  return dx*dx + dy*dy;
-}
-
-
-function blockClicks(){
-  clickIsBlocked = true;
-}
-
-function unblockClicks(){
-  clickIsBlocked = false;
+  return false;
 }
