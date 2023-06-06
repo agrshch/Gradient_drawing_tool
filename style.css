@@ -30,7 +30,42 @@ canvas {
   width: 20%;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 30px;
   padding:20px;
   overflow-y: scroll; 
+}
+
+#gradient-slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 30px;
+}
+
+#gradient-slider-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, red 0%, yellow 50%, blue 100%);
+}
+
+.gradient-stop-marker {
+  position: absolute;
+  top: 50%;
+  height: 110%;
+  width: 2%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 3px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.color-input {
+  position: absolute;
+  top: 170%;
+  height: 100%;
+  width: 5%;
+  transform: translate(-50%, -50%);
+  background: white;
+  cursor: grab;
 }
