@@ -243,10 +243,10 @@ input:disabled {
 #canvas_div{
   flex-grow: 1;
   justify-content: center;
+  padding: 20px;
 }
 
 canvas {
-  padding: 20px;
   margin: auto;
   display: block;
   position: absolute;

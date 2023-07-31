@@ -1,4 +1,21 @@
 function setupControls(){
+  // width/height
+  let w = select('#width');
+  let h = select('#height');
+  w.changed(()=>{
+    w.value(constrain(w.value(),100,3000));
+    calcCnvSize();
+    resizeCanvas(cnvW,cnvH);
+    redraw();
+  })
+  h.changed(()=>{
+    h.value(constrain(h.value(),100,3000));
+    calcCnvSize();
+    resizeCanvas(cnvW,cnvH);
+    redraw();
+  })
+
+
   //top color stop
   let topCol = select('#topColor');
   let topColText = select('#topColorTxt');

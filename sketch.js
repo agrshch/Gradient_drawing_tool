@@ -64,11 +64,11 @@ function draw() {
   rect(0,0,width,height);
 }
 
-// function windowResized(){
-//   calcCnvSize();
-//   resizeCanvas(cnvW, cnvH);
-//   redraw();
-// }
+function windowResized(){
+  calcCnvSize();
+  // resizeCanvas(cnvW, cnvH);
+  // redraw();
+}
 
 function mouseDragged(){
   if(mouseX<0 || mouseX>width || mouseY<0 || mouseY>height) return; //mouse isn't over canvas, return
@@ -88,6 +88,15 @@ function hexToRgb(hex) {
 
 function calcCnvSize(){
   let settingDivW = select('#settings_div').width;
-  cnvH = windowHeight-40;
-  cnvW = windowWidth-settingDivW-40;
+  let maxH = windowHeight-40;
+  let maxW = windowWidth-settingDivW-40;
+  let k1 = maxH/maxW;
+  let k = select('#height').value() / select('#width').value();
+  if(k1>k){
+    cnvW = maxW;
+    cnvH = cnvW*k;
+  } else {
+    cnvH = maxH;
+    cnvW = cnvH/k;
+  }
 }
