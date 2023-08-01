@@ -1,5 +1,11 @@
 html,body {
   height:100%;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -10,27 +16,238 @@ body {
   flex-direction: row;
 }
 
-canvas {
+#settings_div{
+  box-sizing: border-box;
+  width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  padding:20px;
+  overflow-y: scroll; 
+}
+
+.color_div{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.left_col_text{
+  width: 120px;
+}
+
+input[type="text"], input[type="number"] {
+  padding: 5px 15px;
+  font-size: 18px;
+  height: 32px;
+  width: 120px;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+input[type="text"]:hover, input[type="number"]:hover {
+  border: 2px solid black;
+  padding: 4px 14px;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+#width, #height{
+  width: 80px;
+}
+
+input[type="color"]{
+  /* -webkit-appearance: none; */
+  /* -moz-appearance: none; */
+  appearance: none;
+  width: 48px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  background-color: transparent;
+  position: relative;
+  bottom: -10px;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: 1px solid black;
+  width: 48px;
+  height: 32px;
+  border-radius: 6px;
   padding: 0;
+  margin: 0;
+}
+input[type="color"]::-moz-appearance-swatch {
+  border: 1px solid black;
+  width: 48px;
+  height: 32px;
+  border-radius: 6px;
+  padding: 0;
+  margin: 0;
+}
+
+.slider{
+  -webkit-appearance: none;
+  appearance: normal;
+  width: 220px;
+  height: 3px;
+  border-radius: 0;  
+  background: #000000;
+  outline: none;
+  /* opacity: 0.7; */
+  /* -webkit-transition: .2s; */
+  /* transition: opacity .2s; */
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  border-radius: 50%; 
+  background:white;
+  cursor: pointer;
+}
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+}
+#midPosTxt{
+  width: 70px;
+}
+
+#export_div{
+  margin-bottom: 10px;
+}
+select{
+  /* -webkit-appearance: none; */
+  appearance: normal;
+  font-size: 18px;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px 10px;
+  text-align: left;
+}
+
+select:hover{
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+#density_select{
+  width: 120px;
+}
+#file_type_select{
+  width: 169px;
+  margin-left: 5px;
+}
+
+h1{
+  font-size: 26px;
+  font-weight: normal;
+  margin-bottom: 73px;
+}
+
+button{
+  font-size: 18px;
+  height: 42px;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: white;
+  padding: 10px;
+}
+
+button:hover{
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+#checkbox_div{
+  margin-top: 40px;
+}
+
+#slider_div{
+  margin-top: 20px;
+}
+
+#clear_btn{
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+#info{
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+input[type="checkbox"]{
+  cursor: pointer;
+}
+
+a{
+  color: black;
+  /* text-decoration: none;  */
+}
+
+a:hover{
+  text-decoration: underline;
+}
+
+.title{
+  margin-bottom: 10px;
+}
+
+input:disabled {
+  color: #979797;
+  cursor: not-allowed;
+}
+
+.slider:disabled {
+  background: #979797;
+  cursor: not-allowed;
+}
+
+#logo_container{
+  text-align: center;
+  margin-bottom: 58px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#canvas_div{
+  flex-grow: 1;
+  justify-content: center;
+  padding: 20px;
+}
+
+canvas {
   margin: auto;
   display: block;
   position: absolute;
-}
-
-#canvas_div{
-  /* background-color: yellowgreen; */
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  width: 80%;
-}
-
-#settings_div{
-  /* background-color: yellowgreen; */
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding:20px;
-  overflow-y: scroll; 
 }

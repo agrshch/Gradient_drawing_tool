@@ -21,10 +21,15 @@ void main() {
   vec4 data = texture2D(u_data,pix);
   float top = data.r,
         bottom = data.g;
-  int index = int(data.b);
-  vec4 cTop = getColorByIndex(index*3);
-  vec4 cBot = getColorByIndex(index*3+1);
-  vec4 cMid = getColorByIndex(index*3+2);
+  // int index = int(data.b);
+  // vec4 cTop = getColorByIndex(index*3);
+  // vec4 cBot = getColorByIndex(index*3+1);
+  // vec4 cMid = getColorByIndex(index*3+2);
+
+  vec4 cTop = u_colors[0];
+  vec4 cBot = u_colors[1];
+  vec4 cMid = u_colors[2];
+
   vec3 outColor;
   float t = top / (top+bottom);
 
