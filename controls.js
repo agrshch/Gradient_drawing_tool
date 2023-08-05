@@ -6,12 +6,14 @@ function setupControls(){
     w.value(constrain(w.value(),100,3000));
     calcCnvSize();
     resizeCanvas(cnvW,cnvH);
+    clearDataTexture();
     redraw();
   })
   h.changed(()=>{
     h.value(constrain(h.value(),100,3000));
     calcCnvSize();
     resizeCanvas(cnvW,cnvH);
+    clearDataTexture();
     redraw();
   })
 
@@ -123,9 +125,7 @@ function setupControls(){
 
   let clearButton = select('#clear_btn');
   clearButton.mousePressed(()=> {
-    dataTexture.background(255,255,0);
-    A=[-1,-1,-1];
-    B=[-1,-1,-2];
+    clearDataTexture();
     redraw();
   })
 
@@ -146,7 +146,14 @@ function isValidHexCode(hexCode) {
   const regexp = /^#([0-9A-Fa-f]{6})$/;
   return regexp.test(hexCode);
 }
+
 function fixHash(hexCode) {
   if (hexCode.charAt(0) !== '#') hexCode = '#' + hexCode;
   return hexCode;
+}
+
+function clearDataTexture(){
+  dataTexture.draw(()=>background(255,255,0));
+  A=[-1,-1,-1];
+  B=[-1,-1,-2];
 }
