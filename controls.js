@@ -122,6 +122,8 @@ function setupControls(){
     }
   })
 
+  select('#undo_btn').mousePressed(ctrlZ);
+  select('#undo_btn').mouseReleased(()=> select('#undo_btn').attribute("disabled", ''));
 
   let clearButton = select('#clear_btn');
   clearButton.mousePressed(()=> {

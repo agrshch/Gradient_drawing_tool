@@ -177,6 +177,12 @@ button:hover{
   color: white;
   cursor: pointer;
 }
+button:disabled{
+  background-color: white;
+  border: 1px solid #979797;
+  color: #979797;
+  cursor: not-allowed;
+}
 
 #checkbox_div{
   margin-top: 40px;
@@ -184,11 +190,6 @@ button:hover{
 
 #slider_div{
   margin-top: 20px;
-}
-
-#clear_btn{
-  margin-top: 50px;
-  margin-bottom: 50px;
 }
 
 #info{
@@ -227,6 +228,19 @@ input:disabled {
   text-align: center;
   margin-bottom: 58px;
 }
+
+#undo_clear_div{
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#clear_btn, #undo_btn{
+  flex: 1 1 0;
+}
+
 
 
 
