@@ -1,17 +1,16 @@
-let gradientShader,dataShader,
+let gradientShader,dataShader,copyShader,
     dataTexture,
+    prevTex,
     CNV,cnvW,cnvH,
     A = [-1,-1,-1],//coordinates of current line segment
     B = [-1,-1,-1],//coordinates of current line segment
     segmentCounter = 0,
     clickIsBlocked = false;
-    // topColHEX,botColHEX,midColHEX,
-    // topColRGB,botColRGB,midColRGB
-    
 
 function preload(){
   dataShader = loadShader('./basic.vert', './datatexture.frag');
   gradientShader = loadShader('./basic.vert', './gradient.frag');
+  copyShader = loadShader('./basic.vert', './copy.frag');
 }
 
 function setup() {
@@ -19,24 +18,36 @@ function setup() {
   calcCnvSize();
   CNV = createCanvas(cnvW, cnvH, WEBGL);
   CNV.parent(select('#canvas_div'));
-  CNV.mousePressed(()=> segmentCounter++);
+  // CNV.mousePressed(()=> segmentCounter++);
 
-  dataTexture = createGraphics(cnvW, cnvH, WEBGL);
-  dataTexture.background(255,255,0);
-  dataTexture.noStroke();
+  
 
+  dataTexture = createFramebuffer({ format: FLOAT });
+  prevTex = createFramebuffer({ format: FLOAT });
+  dataTexture.draw(()=>{
+    background(255,255,0);
+    noStroke();
+  });
+
+  CNV.mousePressed(()=> {
+    segmentCounter++;
+    ctrlS();
+  });
+  
+  noStroke();
   noLoop();
 }
 
 function draw() {
-  dataTexture.shader(dataShader);
+  shader(dataShader);
   dataShader.setUniform('u_prevState',dataTexture);
   dataShader.setUniform('u_ptA',A);
   dataShader.setUniform('u_ptB',B);
   dataShader.setUniform('u_res',[width,height]);
   dataShader.setUniform('u_colorIndex',0);
-  dataTexture.rect(-dataTexture.width/2,-dataTexture.height/2,dataTexture.width,dataTexture.height);
+  dataTexture.draw(()=>rect(-dataTexture.width/2,-dataTexture.height/2,dataTexture.width,dataTexture.height));
 
+  
   let topColHEX = select('#topColor').value();
   let topColRGB = hexToRgb(topColHEX);
   topColRGB.push(1);
@@ -62,12 +73,6 @@ function draw() {
   gradientShader.setUniform('u_data', dataTexture);
   gradientShader.setUniform('u_colors', colors);
   rect(0,0,width,height);
-}
-
-function windowResized(){
-  calcCnvSize();
-  // resizeCanvas(cnvW, cnvH);
-  // redraw();
 }
 
 function mouseDragged(){
@@ -99,4 +104,21 @@ function calcCnvSize(){
     cnvH = maxH;
     cnvW = cnvH/k;
   }
+}
+
+function ctrlZ(){
+  [dataTexture,prevTex] = [prevTex,dataTexture];
+  ctrlS();
+  A=[-1,-1,-1];
+  B=[-1,-1,-2];
+  // setTimeout(()=>,150);
+  redraw();
+}
+
+
+function ctrlS(){
+  shader(copyShader);
+  copyShader.setUniform('u_source',dataTexture);
+  prevTex.draw(()=>rect(-prevTex.width/2,-prevTex.height/2,prevTex.width,prevTex.height));
+  select('#undo_btn').removeAttribute("disabled");
 }
