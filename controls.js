@@ -122,6 +122,8 @@ function setupControls(){
     }
   })
 
+  select('#grain_check').changed(()=>redraw());
+
   select('#undo_btn').mousePressed(ctrlZ);
   select('#undo_btn').mouseReleased(()=> select('#undo_btn').attribute("disabled", ''));
 

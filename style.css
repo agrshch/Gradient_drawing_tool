@@ -184,7 +184,7 @@ button:disabled{
   cursor: not-allowed;
 }
 
-#checkbox_div{
+.checkbox_div{
   margin-top: 40px;
 }
 
