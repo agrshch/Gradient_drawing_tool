@@ -72,6 +72,7 @@ function draw() {
   shader(gradientShader);
   gradientShader.setUniform('u_data', dataTexture);
   gradientShader.setUniform('u_colors', colors);
+  gradientShader.setUniform('u_grain', select('#grain_check').checked());
   rect(0,0,width,height);
 }
 
