@@ -137,10 +137,12 @@ function setupControls(){
   saveButton.mousePressed(()=> {
     let prev = pixelDensity();
     let timestamp = `${year()}_${month()}_${day()}_${hour()}_${minute()}_${second()}`
+    dataTexture.autoSized = false;
     pixelDensity(parseFloat(select('#density_select').value()));
     redraw();
     save(`gradientor_${timestamp}.${select('#file_type_select').value()}`);
     pixelDensity(prev);
+    dataTexture.autoSized = true;
     redraw();
   })
 
