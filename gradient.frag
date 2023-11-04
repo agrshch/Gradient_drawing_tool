@@ -2,7 +2,7 @@ precision highp float;
 varying vec2 vTexCoord;
 
 #define MAX 99
-#define GRAIN_STEPS 20.0
+#define GRAIN_STEPS 10.0
 
 uniform sampler2D u_data;
 uniform vec4 u_colors[MAX];

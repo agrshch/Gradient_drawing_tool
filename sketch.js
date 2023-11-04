@@ -18,8 +18,6 @@ function setup() {
   calcCnvSize();
   CNV = createCanvas(cnvW, cnvH, WEBGL);
   CNV.parent(select('#canvas_div'));
-  // CNV.mousePressed(()=> segmentCounter++);
-
   
 
   dataTexture = createFramebuffer({ format: FLOAT });
@@ -112,7 +110,6 @@ function ctrlZ(){
   ctrlS();
   A=[-1,-1,-1];
   B=[-1,-1,-2];
-  // setTimeout(()=>,150);
   redraw();
 }
 
