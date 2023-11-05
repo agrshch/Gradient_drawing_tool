@@ -14,6 +14,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./variables.css">
     <script src="./lib/p5.min.js"></script>
     <script src="./controls.js"></script>
     <script src="./sketch.js"></script>
@@ -22,34 +23,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
-
-
   </head>
   <body>
     <div id="settings_div">
 
-      <!-- <h1>Gradient Drawing Tool</h1> -->
       <div id="logo_container">
         <img src="Gradientor.svg" alt="Gradientor logo" id="logo">
       </div>
       
       <div class="color_div" id="cnv_size">
-        <span class="left_col_text">Canvas size</span>
-        <input type="number" id="width" value="1920">
-        <span>x</span>
-        <input type="number" id="height" value="1080">
+        <div class="left_col">Canvas size</div>
+        <div class="right_col">
+          <input type="number" id="width" value="1920">
+          <span>x</span>
+          <input type="number" id="height" value="1080">
+        </div>
       </div>
 
       <div class="color_div" id="top_color_div">
-        <span class="left_col_text">Top color</span>
-        <input type="color" id="topColor" value="#ff0000">
-        <input type="text" id="topColorTxt" value="#FF0000">
+        <div class="left_col">Top color</div>
+        <div class="right_col">
+          <input type="color" id="topColor" value="#ff0000">
+          <input type="text" id="topColorTxt" value="#FF0000">
+        </div>
       </div>
 
       <div class="color_div" id="bottom_color_div">
-        <span class="left_col_text">Bottom color</span>
-        <input type="color" id="botColor" value="#0000ff">
-        <input type="text" id="botColorTxt" value="#0000FF">
+        <div class="left_col">Bottom color</div>
+        <div class="right_col">
+          <input type="color" id="botColor" value="#0000ff">
+          <input type="text" id="botColorTxt" value="#0000FF">
+        </div>
       </div>
 
       <div class="checkbox_div">
@@ -58,10 +62,13 @@
       </div>
 
       <div class="color_div" id="middle_color_div">
-        <span class="left_col_text">Middle color</span>
-        <input type="color" id="midColor" value="#ffff00">
-        <input type="text" id="midColorTxt" value="#FFFF00">
+        <div class="left_col_text">Middle color</div>
+        <div class="right_col">
+          <input type="color" id="midColor" value="#ffff00">
+          <input type="text" id="midColorTxt" value="#FFFF00">
+        </div>
       </div>
+      
       <div class="color_div" id="slider_div">
         <input id="midPos" class="slider" type="range" min="0" max="1" step="0.01" value="0.5">
         <input type="number" id="midPosTxt" min="0" max="1" step="0.01" value="0.5">
@@ -78,28 +85,12 @@
         <button id="clear_btn">Reset canvas</button>
       </div>
       
-
-      <!-- <div id="export_div">
-        <p class="title">Export</p>
-        <select id="density_select">
-          <option value="1" selected>1x</option>
-          <option value="2">2x</option>
-          <option value="3">3x</option>
-          <option value="4">4x</option>
-          <option value="5">5x</option>
-          <option value="6">6x</option>
-        </select>
-        <select id="file_type_select">
-          <option value="jpg">JPG</option>
-          <option value="png">PNG</option>
-        </select>
-      </div> -->
       <button id="save_btn">Download JPG</button>
 
       <p id="info">
         v.1.0. ©<a href="https://agrshch.com/" target="_blank">Anatoly Grashchenko</a>, <a href="https://afterimage.cc/" target="_blank">Afterimage</a>, 2023. <br>
-        Free to use. Code on <a href="https://github.com/agrshch/Gradient_drawing" target="_blank">Github</a>. <br>
-        For commissioning a custom tool, please contact me via <a href="mailto: hi@afterimage.cc">hi@afterimage.cc</a>.
+        <!-- Free to use both commercially and non-commercially. <br> -->
+        For any inquiries or to commission a custom tool, please contact me via <a href="mailto: hi@afterimage.cc">hi@afterimage.cc</a>.
       </p>
 
     </div>
