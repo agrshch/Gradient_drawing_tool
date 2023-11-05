@@ -92,7 +92,6 @@ function setupControls(){
     redraw();
   })
   midPosText.input(()=>{
-    // if(midPosText.value()=='')midPosText.value('0');
     if(midPosText.value().length > 1 && 
         midPosText.value().charAt(0) === '0' &&
         midPosText.value().charAt(1) !== '.' &&
@@ -106,18 +105,14 @@ function setupControls(){
       midCol.removeAttribute("disabled");
       midColText.removeAttribute("disabled");
       midPos.removeAttribute("disabled");
-      midPosText.removeAttribute("disabled");
-      //paint all
-  
+      midPosText.removeAttribute("disabled");  
       redraw();
     } else {
       //disable color picker, slider, two text fields
       midCol.attribute("disabled", true);
       midColText.attribute("disabled", true);
       midPos.attribute("disabled", true);
-      midPosText.attribute("disabled", true);
-      //paint all grey
-      
+      midPosText.attribute("disabled", true);      
       redraw();
     }
   })

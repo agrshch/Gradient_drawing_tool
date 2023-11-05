@@ -4,8 +4,7 @@ let gradientShader,dataShader,copyShader,
     CNV,cnvW,cnvH,
     A = [-1,-1,-1],//coordinates of current line segment
     B = [-1,-1,-1],//coordinates of current line segment
-    segmentCounter = 0,
-    clickIsBlocked = false;
+    segmentCounter = 0;
 
 function preload(){
   dataShader = loadShader('./basic.vert', './datatexture.frag');
@@ -28,6 +27,11 @@ function setup() {
   });
 
   CNV.mousePressed(()=> {
+    segmentCounter++;
+    ctrlS();
+  });
+
+  CNV.touchStarted(()=> {
     segmentCounter++;
     ctrlS();
   });
@@ -119,4 +123,8 @@ function ctrlS(){
   copyShader.setUniform('u_source',dataTexture);
   prevTex.draw(()=>rect(-prevTex.width/2,-prevTex.height/2,prevTex.width,prevTex.height));
   select('#undo_btn').removeAttribute("disabled");
+}
+
+function mouseReleased(){
+  segmentCounter++;
 }
