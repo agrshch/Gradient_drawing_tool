@@ -3,14 +3,14 @@ function setupControls(){
   let w = select('#width');
   let h = select('#height');
   w.changed(()=>{
-    w.value(constrain(w.value(),100,3000));
+    w.value(constrain(w.value(),100,3840));
     calcCnvSize();
     resizeCanvas(cnvW,cnvH);
     clearDataTexture();
     redraw();
   })
   h.changed(()=>{
-    h.value(constrain(h.value(),100,3000));
+    h.value(constrain(h.value(),100,3840));
     calcCnvSize();
     resizeCanvas(cnvW,cnvH);
     clearDataTexture();
@@ -135,9 +135,9 @@ function setupControls(){
     let prev = pixelDensity();
     let timestamp = `${year()}_${month()}_${day()}_${hour()}_${minute()}_${second()}`
     
-    pixelDensity(parseFloat(select('#density_select').value()));
+    pixelDensity(1);
     redraw();
-    save(`gradientor_${timestamp}.${select('#file_type_select').value()}`);
+    save(`gradientor_${timestamp}.jpg`);
     resizeCanvas(cnvW, cnvH);
     pixelDensity(prev);
     dataTexture.autoSized = true;
