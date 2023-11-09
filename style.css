@@ -23,6 +23,7 @@ body {
   gap: 0;
   padding: var(--margins);
   overflow-y: scroll; 
+  user-select: none;
 }
 
 #logo_container{
