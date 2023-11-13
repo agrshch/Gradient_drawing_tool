@@ -18,13 +18,9 @@ function setup() {
   CNV = createCanvas(cnvW, cnvH, WEBGL);
   CNV.parent(select('#canvas_div'));
   
-
   dataTexture = createFramebuffer({ format: FLOAT });
   prevTex = createFramebuffer({ format: FLOAT });
-  dataTexture.draw(()=>{
-    background(255,255,0);
-    noStroke();
-  });
+  clearDataTexture();
 
   CNV.mousePressed(()=> {
     segmentCounter++;
@@ -86,6 +82,12 @@ function mouseDragged(){
   return false;
 }
 
+function mouseReleased(){
+  A = [-1,-1,-1];//coordinates of current line segment
+  B = [-1,-1,-2];
+  segmentCounter++;
+}
+
 function hexToRgb(hex) {
   if (hex.charAt(0) === '#') hex = hex.substr(1);
   let r = parseInt(hex.substring(0, 2), 16);
@@ -123,8 +125,4 @@ function ctrlS(){
   copyShader.setUniform('u_source',dataTexture);
   prevTex.draw(()=>rect(-prevTex.width/2,-prevTex.height/2,prevTex.width,prevTex.height));
   select('#undo_btn').removeAttribute("disabled");
-}
-
-function mouseReleased(){
-  segmentCounter++;
 }

@@ -131,6 +131,7 @@ function setupControls(){
   let saveButton = select('#save_btn');
   saveButton.mousePressed(()=> {
     dataTexture.autoSized = false;
+    prevTex.autoSized = false;
     resizeCanvas(select('#width').value(), select('#height').value());
     let prev = pixelDensity();
     let timestamp = `${year()}_${month()}_${day()}_${hour()}_${minute()}_${second()}`
@@ -141,6 +142,7 @@ function setupControls(){
     resizeCanvas(cnvW, cnvH);
     pixelDensity(prev);
     dataTexture.autoSized = true;
+    prevTex.autoSized = true;
     redraw();
   })
 
@@ -157,7 +159,11 @@ function fixHash(hexCode) {
 }
 
 function clearDataTexture(){
+  ctrlS(); // no idead why but saving before drawing cures weird glitches
   dataTexture.draw(()=>background(255,255,0));
+  prevTex.draw    (()=>background(255,255,0));
+  select('#undo_btn').attribute("disabled", '');
+  // ctrlS();
   A=[-1,-1,-1];
   B=[-1,-1,-2];
 }
