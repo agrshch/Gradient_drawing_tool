@@ -132,11 +132,15 @@ function setupControls(){
   saveButton.mousePressed(()=> {
     let timestamp = `${year()}_${month()}_${day()}_${hour()}_${minute()}_${second()}`;
     if(width > select('#width').value()){
-      let out = createGraphics(cnvW, cnvH);
+      let out = createGraphics(select('#width').value(), select('#height').value());
+      console.log(out.width)
       let outTex = get();
-      out.image(outTex,0,0,cnvW, cnvH);
+      out.pixelDensity(1);
+      out.image(outTex,0,0,out.width, out.height);
       out.save(`small_gradientor_${timestamp}.jpg`);
-      
+      out.clear();
+      out.remove();
+      out = null;
     } else {
       currentTex.autoSized = false;
       prevTex.autoSized = false;
