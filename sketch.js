@@ -1,6 +1,6 @@
 let gradientShader,dataShader,copyShader,
-    dataTexture,
-    prevTex,
+    currentTex,prevTex,
+    backupTex,
     CNV,cnvW,cnvH,
     A = [-1,-1,-1],//coordinates of current line segment
     B = [-1,-1,-1],//coordinates of current line segment
@@ -18,8 +18,9 @@ function setup() {
   CNV = createCanvas(cnvW, cnvH, WEBGL);
   CNV.parent(select('#canvas_div'));
   
-  dataTexture = createFramebuffer({ format: FLOAT });
+  currentTex = createFramebuffer({ format: FLOAT });
   prevTex = createFramebuffer({ format: FLOAT });
+  backupTex = createFramebuffer({ format: FLOAT });
   clearDataTexture();
 
   CNV.mousePressed(()=> {
@@ -37,13 +38,15 @@ function setup() {
 }
 
 function draw() {
+  [prevTex,currentTex] = [currentTex,prevTex];
+
   shader(dataShader);
-  dataShader.setUniform('u_prevState',dataTexture);
+  dataShader.setUniform('u_prevState',prevTex);
   dataShader.setUniform('u_ptA',A);
   dataShader.setUniform('u_ptB',B);
   dataShader.setUniform('u_res',[width,height]);
   dataShader.setUniform('u_colorIndex',0);
-  dataTexture.draw(()=>rect(-dataTexture.width/2,-dataTexture.height/2,dataTexture.width,dataTexture.height));
+  currentTex.draw(()=>rect(-currentTex.width/2,-currentTex.height/2,currentTex.width,currentTex.height));
 
   
   let topColHEX = select('#topColor').value();
@@ -68,7 +71,7 @@ function draw() {
   translate(-width/2, -height/2);
   noStroke();
   shader(gradientShader);
-  gradientShader.setUniform('u_data', dataTexture);
+  gradientShader.setUniform('u_data', currentTex);
   gradientShader.setUniform('u_colors', colors);
   gradientShader.setUniform('u_grain', select('#grain_check').checked());
   rect(0,0,width,height);
@@ -112,7 +115,7 @@ function calcCnvSize(){
 }
 
 function ctrlZ(){
-  [dataTexture,prevTex] = [prevTex,dataTexture];
+  [currentTex,backupTex] = [backupTex,currentTex];
   ctrlS();
   A=[-1,-1,-1];
   B=[-1,-1,-2];
@@ -122,7 +125,7 @@ function ctrlZ(){
 
 function ctrlS(){
   shader(copyShader);
-  copyShader.setUniform('u_source',dataTexture);
-  prevTex.draw(()=>rect(-prevTex.width/2,-prevTex.height/2,prevTex.width,prevTex.height));
+  copyShader.setUniform('u_source',currentTex);
+  backupTex.draw(()=>rect(-backupTex.width/2,-backupTex.height/2,backupTex.width,backupTex.height));
   select('#undo_btn').removeAttribute("disabled");
 }
