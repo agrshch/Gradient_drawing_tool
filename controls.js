@@ -130,22 +130,30 @@ function setupControls(){
 
   let saveButton = select('#save_btn');
   saveButton.mousePressed(()=> {
-    currentTex.autoSized = false;
-    prevTex.autoSized = false;
-    backupTex.autoSized = false;
-    resizeCanvas(select('#width').value(), select('#height').value());
-    let prev = pixelDensity();
-    let timestamp = `${year()}_${month()}_${day()}_${hour()}_${minute()}_${second()}`
-    
-    pixelDensity(1);
-    redraw();
-    save(`gradientor_${timestamp}.jpg`);
-    resizeCanvas(cnvW, cnvH);
-    pixelDensity(prev);
-    currentTex.autoSized = true;
-    prevTex.autoSized = true;
-    backupTex.autoSized = true;
-    redraw();
+    let timestamp = `${year()}_${month()}_${day()}_${hour()}_${minute()}_${second()}`;
+    if(width > select('#width').value()){
+      let out = createGraphics(cnvW, cnvH);
+      let outTex = get();
+      out.image(outTex,0,0,cnvW, cnvH);
+      out.save(`small_gradientor_${timestamp}.jpg`);
+      
+    } else {
+      currentTex.autoSized = false;
+      prevTex.autoSized = false;
+      backupTex.autoSized = false;
+      resizeCanvas(select('#width').value(), select('#height').value());
+      let prevPD = pixelDensity();
+      
+      pixelDensity(1);
+      redraw();
+      save(`gradientor_${timestamp}.jpg`);
+      resizeCanvas(cnvW, cnvH);
+      pixelDensity(prevPD);
+      currentTex.autoSized = true;
+      prevTex.autoSized = true;
+      backupTex.autoSized = true;
+      redraw();
+    }
   })
 
 }
