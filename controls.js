@@ -17,6 +17,9 @@ function setupControls(){
     redraw();
   })
 
+  //svg
+  select('#svgInput').changed(loadSVG);
+
 
   //top color stop
   let topCol = select('#topColor');
@@ -83,20 +86,9 @@ function setupControls(){
   })
   //slider change
   midPos.input(()=>{
-    midPosText.value(midPos.value())
     redraw();
   })
-  midPosText.changed(()=>{
-    midPosText.value(constrain(midPosText.value(),0,1));
-    midPos.value(midPosText.value())
-    redraw();
-  })
-  midPosText.input(()=>{
-    if(midPosText.value().length > 1 && 
-        midPosText.value().charAt(0) === '0' &&
-        midPosText.value().charAt(1) !== '.' &&
-        midPosText.value().charAt(1) !== ',') midPosText.value(midPosText.value().substring(1))
-  })
+
 
   // react on checking unchecking
   midCheck.changed(()=>{
@@ -105,14 +97,12 @@ function setupControls(){
       midCol.removeAttribute("disabled");
       midColText.removeAttribute("disabled");
       midPos.removeAttribute("disabled");
-      midPosText.removeAttribute("disabled");  
       redraw();
     } else {
       //disable color picker, slider, two text fields
       midCol.attribute("disabled", true);
       midColText.attribute("disabled", true);
-      midPos.attribute("disabled", true);
-      midPosText.attribute("disabled", true);      
+      midPos.attribute("disabled", true);   
       redraw();
     }
   })
@@ -133,7 +123,6 @@ function setupControls(){
     let timestamp = `${year()}_${month()}_${day()}_${hour()}_${minute()}_${second()}`;
     if(width > select('#width').value()){
       let out = createGraphics(select('#width').value(), select('#height').value());
-      console.log(out.width)
       let outTex = get();
       out.pixelDensity(1);
       out.image(outTex,0,0,out.width, out.height);
@@ -181,4 +170,8 @@ function clearDataTexture(){
   // ctrlS();
   A=[-1,-1,-1];
   B=[-1,-1,-2];
+
+  let fileInput = document.getElementById('svgInput');
+  fileInput.value = "";
+  isDrawingSVG = false;
 }

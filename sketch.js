@@ -38,6 +38,26 @@ function setup() {
 }
 
 function draw() {
+  if (isDrawingSVG){
+    let p = PATHS[pathCounter];
+    let a = p[ptCounter];
+    let b = p[constrain(ptCounter+1, 0, p.length-1)];
+    A = [a.x, a.y, pathCounter];
+    B = [b.x, b.y, pathCounter];
+    ptCounter ++;
+    if(ptCounter >= p.length){
+      ptCounter = 0;
+      pathCounter ++;
+    }
+    if(pathCounter >= PATHS.length){
+      pathCounter = 0;
+      ptCounter = 0;
+      isDrawingSVG = false;
+      noLoop();
+    }
+  }
+
+
   [prevTex,currentTex] = [currentTex,prevTex];
 
   shader(dataShader);
