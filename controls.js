@@ -86,20 +86,9 @@ function setupControls(){
   })
   //slider change
   midPos.input(()=>{
-    midPosText.value(midPos.value())
     redraw();
   })
-  midPosText.changed(()=>{
-    midPosText.value(constrain(midPosText.value(),0,1));
-    midPos.value(midPosText.value())
-    redraw();
-  })
-  midPosText.input(()=>{
-    if(midPosText.value().length > 1 && 
-        midPosText.value().charAt(0) === '0' &&
-        midPosText.value().charAt(1) !== '.' &&
-        midPosText.value().charAt(1) !== ',') midPosText.value(midPosText.value().substring(1))
-  })
+
 
   // react on checking unchecking
   midCheck.changed(()=>{
@@ -108,14 +97,12 @@ function setupControls(){
       midCol.removeAttribute("disabled");
       midColText.removeAttribute("disabled");
       midPos.removeAttribute("disabled");
-      midPosText.removeAttribute("disabled");  
       redraw();
     } else {
       //disable color picker, slider, two text fields
       midCol.attribute("disabled", true);
       midColText.attribute("disabled", true);
-      midPos.attribute("disabled", true);
-      midPosText.attribute("disabled", true);      
+      midPos.attribute("disabled", true);   
       redraw();
     }
   })

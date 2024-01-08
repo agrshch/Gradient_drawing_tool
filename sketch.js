@@ -88,6 +88,8 @@ function draw() {
   colors.push(...botColRGB);
   colors.push(...midColRGB);
 
+  console.log('redraw')
+
   background(255);
   translate(-width/2, -height/2);
   noStroke();

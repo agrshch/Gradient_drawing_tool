@@ -41,7 +41,7 @@
       
       
       
-      <div class="color_div" id="cnv_size">
+      <div class="cnv_size" id="cnv_size">
         <div class="left_col">Canvas size</div>
         <div class="right_col">
           <input type="number" id="width" value="1920">
@@ -50,39 +50,34 @@
         </div>
       </div>
 
-      <div class="color_div" id="top_color_div">
-        <div class="left_col">Top color</div>
-        <div class="right_col">
-          <input type="color" id="topColor" value="#ff0000">
-          <input type="text" id="topColorTxt" value="#FF0000">
+
+      <div id="colors">
+        <p>Colors</p>
+        <div id="colopickers">
+          <div id="top-box">
+            <input type="color" id="topColor" value="#ff0000">
+            <input type="text" id="topColorTxt" value="#ff0000">
+            <p>Top</p>
+          </div>
+          <div id="middle-box">
+            <input type="color" id="midColor" value="#ffff00">
+            <input type="text" id="midColorTxt" value="#ffff00">
+            <input type="checkbox" id="mid_check" checked>
+            <label for="mid_check">Middle</label>
+          </div>
+          <div id="bottom-box">
+            <input type="color" id="botColor" value="#0000ff">
+            <input type="text" id="botColorTxt" value="#0000ff">
+            <p>Bottom</p>
+          </div>
         </div>
       </div>
 
-      <div class="color_div" id="bottom_color_div">
-        <div class="left_col">Bottom color</div>
-        <div class="right_col">
-          <input type="color" id="botColor" value="#0000ff">
-          <input type="text" id="botColorTxt" value="#0000FF">
-        </div>
-      </div>
-
-      <div class="checkbox_div">
-        <input type="checkbox" id="mid_check" checked>
-        <label for="mid_check">Add a color in the middle</label>
-      </div>
-
-      <div class="color_div" id="middle_color_div">
-        <div class="left_col_text">Middle color</div>
-        <div class="right_col">
-          <input type="color" id="midColor" value="#ffff00">
-          <input type="text" id="midColorTxt" value="#FFFF00">
-        </div>
-      </div>
       
-      <div class="color_div" id="slider_div">
+      <!-- <div class="color_div" id="slider_div"> -->
         <input id="midPos" class="slider" type="range" min="0" max="1" step="0.01" value="0.5">
-        <input type="number" id="midPosTxt" min="0" max="1" step="0.01" value="0.5">
-      </div>
+        <!-- <input type="number" id="midPosTxt" min="0" max="1" step="0.01" value="0.5"> -->
+      <!-- </div> -->
 
       <div class="checkbox_div">
         <input type="checkbox" id="grain_check">
@@ -103,8 +98,8 @@
       <button id="save_btn">Download JPG</button>
 
       <p id="info">
-        v.1.2 ©<a href="https://agrshch.com/" target="_blank">Anatoly Grashchenko</a>, <a href="https://afterimage.cc/" target="_blank">Afterimage</a>, 2023. <br>
-        <!-- Free to use both commercially and non-commercially. <br> -->
+        v.1.3 ©<a href="https://agrshch.com/" target="_blank">Anatoly Grashchenko</a>, <a href="https://afterimage.cc/" target="_blank">Afterimage</a>, <br>2023-2024. <br>
+        Plotting SVG files works best in Safari. <br>
         For any inquiries or to commission a custom tool, please contact me via <a href="mailto: hi@afterimage.cc">hi@afterimage.cc</a>.
       </p>
 
