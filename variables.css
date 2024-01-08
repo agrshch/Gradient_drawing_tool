@@ -10,10 +10,9 @@
   --h: 30px;
   --h2: 40px;
   
-  /* --left-col: 120px; */
-  /* --main_txt_size: clamp(12px, 1vw, 18px); */
-  /* --div: clamp(250px, 15vw, 340px); */
-  /* --left-col: clamp(80px, 5vw, 120px); */
+  --bg: #ffffff;
+  --fg: #121111;
+  --diss: #b4b0b0;
 }
 
 
