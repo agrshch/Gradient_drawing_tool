@@ -80,6 +80,7 @@ input[type=number] {
 
 
 
+
 input[type="color"]{
   appearance: none;
   width: calc(var(--h)*1.5);
@@ -167,7 +168,7 @@ input:disabled {
 
 #undo_clear_div{
   margin-top: var(--h2);
-  margin-bottom: var(--h2);
+  margin-bottom: var(--margins);
   display: flex;
   justify-content: space-between;
   gap: var(--gap);
@@ -178,6 +179,7 @@ input:disabled {
 }
 
 button{
+  font-family: 'Inter', sans-serif;
   font-size: var(--main_txt_size);
   height: var(--h2);
   min-height: var(--h2);
@@ -193,13 +195,36 @@ button:hover{
   color: white;
   cursor: pointer;
 }
-button:disabled{
+button:disabled, .file-upload-button:disabled{
   background-color: white;
   border: 1px solid #979797;
   color: #979797;
   cursor: not-allowed;
 }
 
+
+.file-upload-wrapper {
+  margin-bottom: var(--h2);}
+
+.file-upload-button {
+  display: block;
+  text-align: center;
+  font-size: var(--main_txt_size);
+  height: var(--h2);
+  min-height: var(--h2);
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: var(--gap);  
+  background-color: white;
+  padding: 10px;
+  
+}
+
+.file-upload-button:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
 
 
 

@@ -17,6 +17,9 @@ function setupControls(){
     redraw();
   })
 
+  //svg
+  select('#svgInput').changed(loadSVG);
+
 
   //top color stop
   let topCol = select('#topColor');
@@ -181,4 +184,8 @@ function clearDataTexture(){
   // ctrlS();
   A=[-1,-1,-1];
   B=[-1,-1,-2];
+
+  let fileInput = document.getElementById('svgInput');
+  fileInput.value = "";
+  isDrawingSVG = false;
 }

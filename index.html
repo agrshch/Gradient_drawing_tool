@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="./variables.css">
     <script src="./lib/p5.min.js"></script>
     <script src="./controls.js"></script>
+    <script src="./svg_import.js"></script>
     <script src="./sketch.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,6 +37,9 @@
       <div id="logo_container">
         <img src="Gradientor.svg" alt="Gradientor logo" id="logo">
       </div>
+
+      
+      
       
       <div class="color_div" id="cnv_size">
         <div class="left_col">Canvas size</div>
@@ -64,7 +68,7 @@
 
       <div class="checkbox_div">
         <input type="checkbox" id="mid_check" checked>
-        <span>Add a color in the middle</span>
+        <label for="mid_check">Add a color in the middle</label>
       </div>
 
       <div class="color_div" id="middle_color_div">
@@ -82,7 +86,7 @@
 
       <div class="checkbox_div">
         <input type="checkbox" id="grain_check">
-        <span>Add grain</span>
+        <label for="grain_check">Add grain</label>
       </div>
 
 
@@ -91,6 +95,11 @@
         <button id="clear_btn">Reset canvas</button>
       </div>
       
+      <div class="file-upload-wrapper">
+        <input type="file" id="svgInput" accept=".svg" hidden />
+        <label for="svgInput" class="file-upload-button">Upload SVG File</label>
+      </div>
+
       <button id="save_btn">Download JPG</button>
 
       <p id="info">
