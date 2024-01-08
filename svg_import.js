@@ -1,7 +1,8 @@
 let POINT_DENSITY = 10;
 let PATHS;
 let isDrawingSVG = false;
-let pathCounter = ptCounter = 0;
+let pathCounter = 0;
+let ptCounter = 0;
 
 //initial function, works when input gets file
 async function loadSVG() {
@@ -195,28 +196,57 @@ function processPolygonElement(polygonElement) {
   let points = [];
 
   for (let i = 0; i < rawPoints.length; i += 2) {
-    let x = parseFloat(rawPoints[i]);
-    let y = parseFloat(rawPoints[i + 1]);
-    points.push(createVector(x, y));
+    let x1 = parseFloat(rawPoints[i]);
+    let y1 = parseFloat(rawPoints[i + 1]);
+    let x2, y2;
+    
+    if (i < rawPoints.length - 2) {
+      x2 = parseFloat(rawPoints[i + 2]);
+      y2 = parseFloat(rawPoints[i + 3]);
+    } else { // Closing the polygon
+      x2 = parseFloat(rawPoints[0]);
+      y2 = parseFloat(rawPoints[1]);
+    }
+
+    points.push(...interpolatePoints(x1, y1, x2, y2, POINT_DENSITY));
   }
   points.push(points[0].copy()); //close the shape
   PATHS.push(points);
 }
 
+
 function processPolylineElement(polylineElement) {
   let rawPoints = polylineElement.getAttribute('points').trim().split(/\s+|,/);
   let points = [];
 
-  for (let i = 0; i < rawPoints.length; i += 2) {
-    let x = parseFloat(rawPoints[i]);
-    let y = parseFloat(rawPoints[i + 1]);
-    points.push(createVector(x, y));
-  }
+  for (let i = 0; i < rawPoints.length - 2; i += 2) {
+    let x1 = parseFloat(rawPoints[i]);
+    let y1 = parseFloat(rawPoints[i + 1]);
+    let x2 = parseFloat(rawPoints[i + 2]);
+    let y2 = parseFloat(rawPoints[i + 3]);
 
+    points.push(...interpolatePoints(x1, y1, x2, y2, POINT_DENSITY));
+  }
+  
   PATHS.push(points);
 }
 
 
+
+function interpolatePoints(x1, y1, x2, y2, pointDensity) {
+  let points = [];
+  let lineLength = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  let numPoints = lineLength / pointDensity;
+
+  for (let i = 0; i <= numPoints; i++) {
+    let t = i / numPoints;
+    let x = x1 + t * (x2 - x1);
+    let y = y1 + t * (y2 - y1);
+    points.push(createVector(x, y));
+  }
+
+  return points;
+}
 
 
 
@@ -269,7 +299,7 @@ function parseMatrix(transformStr) {
     let sinAngle = Math.sin(angle);
     let tx = cx - cx * cosAngle + cy * sinAngle;
     let ty = cy - cx * sinAngle - cy * cosAngle;
-    console.log([cosAngle, sinAngle, -sinAngle, cosAngle, tx, ty])
+
     return [cosAngle, sinAngle, -sinAngle, cosAngle, tx, ty];
   }
   return null; // Или другой способ обработки неизвестных трансформаций

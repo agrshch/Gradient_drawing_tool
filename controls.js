@@ -123,7 +123,6 @@ function setupControls(){
     let timestamp = `${year()}_${month()}_${day()}_${hour()}_${minute()}_${second()}`;
     if(width > select('#width').value()){
       let out = createGraphics(select('#width').value(), select('#height').value());
-      console.log(out.width)
       let outTex = get();
       out.pixelDensity(1);
       out.image(outTex,0,0,out.width, out.height);

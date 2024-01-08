@@ -40,7 +40,6 @@ function setup() {
 function draw() {
   if (isDrawingSVG){
     let p = PATHS[pathCounter];
-    console.log(pathCounter)
     let a = p[ptCounter];
     let b = p[constrain(ptCounter+1, 0, p.length-1)];
     A = [a.x, a.y, pathCounter];
@@ -87,8 +86,6 @@ function draw() {
   colors.push(...topColRGB);
   colors.push(...botColRGB);
   colors.push(...midColRGB);
-
-  console.log('redraw')
 
   background(255);
   translate(-width/2, -height/2);
