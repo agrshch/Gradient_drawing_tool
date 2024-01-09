@@ -1,7 +1,7 @@
 precision highp float;
 varying vec2 vTexCoord;
 
-#define MAX 99
+#define MAX 30
 #define GRAIN_STEPS 10.0
 
 uniform sampler2D u_data;
@@ -40,6 +40,15 @@ void main() {
   // 2. see is there any third color
   if(cMid.a < 0.){
     // if no 3rd color:    
+    if(u_grain){
+      float sum = 0.0;
+      for(float i = 0.0; i < GRAIN_STEPS; i++){
+        float H = hash12(gl_FragCoord.xy + i*1000.);
+        H = (t>H)?1.0:0.0;
+        sum += H;
+      }
+      t = sum / GRAIN_STEPS;
+    }
     outColor = mix(cTop.rgb/255., cBot.rgb/255., t);
   } else {
     // if 3rd color exists:
