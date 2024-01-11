@@ -228,6 +228,7 @@ function processPolylineElement(polylineElement) {
 
 
 function interpolatePoints(x1, y1, x2, y2, pointDensity) {
+  if (x1 === x2 && y1 === y2) return [createVector(x1, y1)];
   let points = [];
   let lineLength = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
   let numPoints = lineLength / pointDensity;
