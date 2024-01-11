@@ -20,14 +20,6 @@ async function loadSVG() {
 }
 
 
-
-
-
-
-
-
-
-
 //main function
 function processSVG(svgContent) {
   pathStartPoint = createVector(0,0);
@@ -264,7 +256,6 @@ function interpolatePoints(x1, y1, x2, y2, pointDensity) {
 function splitSubPaths(pathData) {
   pathStartPoint = createVector(0,0);
   let parts = pathData.split(/(?=[Mm])/);
-  console.log(parts)
   return parts;
 }
 
@@ -277,8 +268,7 @@ function extractPointsFromPath(pathData) {
   pathElement.setAttribute('d', pathData);
 
   let totalLength = pathElement.getTotalLength();
-  //POINT_DENSITY -- global variable
-  let numPoints = totalLength / POINT_DENSITY;
+  let numPoints = totalLength / POINT_DENSITY; //POINT_DENSITY -- global variable
 
   for (let i = 0; i <= numPoints; i++) {
     let pointPosition = i * POINT_DENSITY;
@@ -297,7 +287,7 @@ function parseMatrix(transformStr) {
     return transformStr.match(/matrix\(([^)]+)\)/)[1].split(' ').map(Number);
   } else if (transformStr.startsWith("rotate")) {
     let [angle, cx = 0, cy = 0] = transformStr.match(/rotate\(([^)]+)\)/)[1].split(' ').map(Number);
-    angle = angle * Math.PI / 180; // Преобразование в радианы
+    angle = angle * Math.PI / 180; 
     let cosAngle = Math.cos(angle);
     let sinAngle = Math.sin(angle);
     let tx = cx - cx * cosAngle + cy * sinAngle;
@@ -305,7 +295,7 @@ function parseMatrix(transformStr) {
 
     return [cosAngle, sinAngle, -sinAngle, cosAngle, tx, ty];
   }
-  return null; // Или другой способ обработки неизвестных трансформаций
+  return null; 
 }
 
 function applyMatrixToVector(vector, matrixValues) {
@@ -340,7 +330,7 @@ function getSvgDimensions(svgString) {
       }
     }
   }
-  console.log(width, height)
+  
   return [width, height];
 }
 
