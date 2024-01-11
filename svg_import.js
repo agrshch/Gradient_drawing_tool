@@ -3,6 +3,7 @@ let PATHS;
 let isDrawingSVG = false;
 let pathCounter = 0;
 let ptCounter = 0;
+let pathStartPoint;
 
 //initial function, works when input gets file
 async function loadSVG() {
@@ -29,6 +30,7 @@ async function loadSVG() {
 
 //main function
 function processSVG(svgContent) {
+  pathStartPoint = createVector(0,0);
   let parser = new DOMParser();
   let xmlDoc = parser.parseFromString(svgContent, 'text/xml');
 
@@ -260,13 +262,16 @@ function interpolatePoints(x1, y1, x2, y2, pointDensity) {
 
 //split paths to subpaths
 function splitSubPaths(pathData) {
+  pathStartPoint = createVector(0,0);
   let parts = pathData.split(/(?=[Mm])/);
+  console.log(parts)
   return parts;
 }
 
 // split subpath to sequence of points 
 function extractPointsFromPath(pathData) {
   let points = [];
+  if(pathData.charAt(0) === 'M') pathStartPoint = createVector(0,0);
   
   let pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   pathElement.setAttribute('d', pathData);
@@ -278,16 +283,14 @@ function extractPointsFromPath(pathData) {
   for (let i = 0; i <= numPoints; i++) {
     let pointPosition = i * POINT_DENSITY;
     let point = pathElement.getPointAtLength(pointPosition);
-    points.push(createVector(point.x, point.y));
+    points.push(createVector(point.x + pathStartPoint.x, point.y + pathStartPoint.y));
   }
-
+  pathStartPoint = points[0];
   return points;
 }
 
 
-// function parseMatrix(matrixStr) {
-//   return matrixStr.match(/matrix\(([^)]+)\)/)[1].split(' ').map(Number);
-// }
+
 
 function parseMatrix(transformStr) {
   if (transformStr.startsWith("matrix")) {
@@ -326,6 +329,18 @@ function getSvgDimensions(svgString) {
   let width = widthMatch ? parseFloat(widthMatch[1]) : null;
   let height = heightMatch ? parseFloat(heightMatch[1]) : null;
 
+  // If width or height is not set, try to extract them from the viewBox
+  if (width === null || height === null) {
+    let viewBoxMatch = svgString.match(/viewBox="([^"]+)"/);
+    if (viewBoxMatch) {
+      let viewBoxValues = viewBoxMatch[1].split(/\s+|,/).map(Number);
+      if (viewBoxValues.length === 4) {
+        width = width === null ? viewBoxValues[2] : width;
+        height = height === null ? viewBoxValues[3] : height;
+      }
+    }
+  }
+  console.log(width, height)
   return [width, height];
 }
 
