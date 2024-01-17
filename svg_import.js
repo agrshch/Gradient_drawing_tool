@@ -12,6 +12,7 @@ async function loadSVG() {
     PATHS = [];
     const file = fileInput.files[0];
     const text = await file.text();
+    POINT_DENSITY = calcDensity(text);
     processSVG(text); //calls main function
     fitToCanvas(...getSvgDimensions(text)); //scales everything to fit into canvas
     isDrawingSVG = true;
@@ -314,22 +315,40 @@ function isPathClosed(pathData) {
 
 
 function getSvgDimensions(svgString) {
-  let widthMatch = svgString.match(/width="([^"]+)"/);
-  let heightMatch = svgString.match(/height="([^"]+)"/);
+  // let widthMatch = svgString.match(/width="([^"]+)"/);
+  // let heightMatch = svgString.match(/height="([^"]+)"/);
 
-  let width = widthMatch ? parseFloat(widthMatch[1]) : null;
-  let height = heightMatch ? parseFloat(heightMatch[1]) : null;
+  // let width = widthMatch ? parseFloat(widthMatch[1]) : null;
+  // let height = heightMatch ? parseFloat(heightMatch[1]) : null;
 
-  // If width or height is not set, try to extract them from the viewBox
-  if (width === null || height === null) {
-    let viewBoxMatch = svgString.match(/viewBox="([^"]+)"/);
-    if (viewBoxMatch) {
-      let viewBoxValues = viewBoxMatch[1].split(/\s+|,/).map(Number);
-      if (viewBoxValues.length === 4) {
-        width = width === null ? viewBoxValues[2] : width;
-        height = height === null ? viewBoxValues[3] : height;
-      }
+  // // If width or height is not set, try to extract them from the viewBox
+  // if (width === null || height === null) {
+  //   let viewBoxMatch = svgString.match(/viewBox="([^"]+)"/);
+  //   if (viewBoxMatch) {
+  //     let viewBoxValues = viewBoxMatch[1].split(/\s+|,/).map(Number);
+  //     if (viewBoxValues.length === 4) {
+  //       width = width === null ? viewBoxValues[2] : width;
+  //       height = height === null ? viewBoxValues[3] : height;
+  //     }
+  //   }
+  // }
+
+  let width,height;
+  let viewBoxMatch = svgString.match(/viewBox="([^"]+)"/);
+  if (viewBoxMatch) {
+    let viewBoxValues = viewBoxMatch[1].split(/\s+|,/).map(Number);
+    if (viewBoxValues.length === 4) {
+      width =  viewBoxMatch ? viewBoxMatch[1].split(/\s+|,/).map(Number)[2] : null;
+      height = viewBoxMatch ? viewBoxMatch[1].split(/\s+|,/).map(Number)[3] : null;
     }
+  }
+
+  if (width === null || height === null) {
+    let widthMatch = svgString.match(/width="([^"]+)"/);
+    let heightMatch = svgString.match(/height="([^"]+)"/);
+    if (widthMatch)  width  = width===null  ? parseFloat(widthMatch[1])  : width;
+    if (heightMatch) height = height===null ? parseFloat(heightMatch[1]) : height;
+
   }
   
   return [width, height];
@@ -354,4 +373,9 @@ function fitToCanvas(w,h){
   }
 }
 
+
+function calcDensity(svgData){
+  let [w,h] = getSvgDimensions(svgData);
+  return max(w,h) * 0.0075;
+}
 
