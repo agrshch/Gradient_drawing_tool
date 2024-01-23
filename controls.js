@@ -126,7 +126,7 @@ function setupControls(){
       let outTex = get();
       out.pixelDensity(1);
       out.image(outTex,0,0,out.width, out.height);
-      out.save(`small_gradientor_${timestamp}.jpg`);
+      out.save(`small_gradientor_${timestamp}.png`);
       out.clear();
       out.remove();
       out = null;
@@ -139,7 +139,7 @@ function setupControls(){
       
       pixelDensity(1);
       redraw();
-      save(`gradientor_${timestamp}.jpg`);
+      save(`gradientor_${timestamp}.png`);
       resizeCanvas(cnvW, cnvH);
       pixelDensity(prevPD);
       currentTex.autoSized = true;
