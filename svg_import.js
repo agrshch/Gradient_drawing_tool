@@ -82,6 +82,7 @@ function processLineElement(lineElement) {
     let y = y1 + t * (y2 - y1);
     points.push(createVector(x, y));
   }
+  points.push(createVector(x2, y2));
 
   PATHS.push(points);
 }
@@ -315,24 +316,6 @@ function isPathClosed(pathData) {
 
 
 function getSvgDimensions(svgString) {
-  // let widthMatch = svgString.match(/width="([^"]+)"/);
-  // let heightMatch = svgString.match(/height="([^"]+)"/);
-
-  // let width = widthMatch ? parseFloat(widthMatch[1]) : null;
-  // let height = heightMatch ? parseFloat(heightMatch[1]) : null;
-
-  // // If width or height is not set, try to extract them from the viewBox
-  // if (width === null || height === null) {
-  //   let viewBoxMatch = svgString.match(/viewBox="([^"]+)"/);
-  //   if (viewBoxMatch) {
-  //     let viewBoxValues = viewBoxMatch[1].split(/\s+|,/).map(Number);
-  //     if (viewBoxValues.length === 4) {
-  //       width = width === null ? viewBoxValues[2] : width;
-  //       height = height === null ? viewBoxValues[3] : height;
-  //     }
-  //   }
-  // }
-
   let width,height;
   let viewBoxMatch = svgString.match(/viewBox="([^"]+)"/);
   if (viewBoxMatch) {
