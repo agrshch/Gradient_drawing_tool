@@ -15,4 +15,12 @@
   --diss: #b4b0b0;
 }
 
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #202020;
+    --fg: #f0f0f0;
+  }
+}
+
 
