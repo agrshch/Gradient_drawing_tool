@@ -6,15 +6,15 @@ function setupControls(){
     w.value(constrain(w.value(),100,3840));
     calcCnvSize();
     resizeCanvas(cnvW,cnvH);
+    fixCnvStyles();
     clearDataTexture();
-    redraw();
   })
   h.changed(()=>{
     h.value(constrain(h.value(),100,3840));
     calcCnvSize();
     resizeCanvas(cnvW,cnvH);
+    fixCnvStyles();
     clearDataTexture();
-    redraw();
   })
 
   //svg
@@ -115,7 +115,6 @@ function setupControls(){
   let clearButton = select('#clear_btn');
   clearButton.mousePressed(()=> {
     clearDataTexture();
-    redraw();
   })
 
   let saveButton = select('#save_btn');
@@ -162,12 +161,19 @@ function fixHash(hexCode) {
 }
 
 function clearDataTexture(){
-  ctrlS(); // no idead why but saving before drawing cures weird glitches
   currentTex.draw(()=>background(255,255,0));
   prevTex.draw   (()=>background(255,255,0));
   backupTex.draw (()=>background(255,255,0));
+  redraw();
+
+  currentTex.draw(()=>background(255,255,0));
+  prevTex.draw   (()=>background(255,255,0));
+  backupTex.draw (()=>background(255,255,0));
+  redraw();
+
+
   select('#undo_btn').attribute("disabled", '');
-  // ctrlS();
+  ctrlS();
   A=[-1,-1,-1];
   B=[-1,-1,-2];
 

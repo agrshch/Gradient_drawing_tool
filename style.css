@@ -292,13 +292,8 @@ a:hover{
 
 
 #canvas_div{
-  flex-grow: 1;
-  justify-content: center;
   padding: var(--margins);
+  width: calc(100% - var(--div));
+  box-sizing: border-box;
 }
 
-canvas {
-  margin: auto;
-  display: block;
-  position: absolute;
-}
