@@ -14,13 +14,23 @@ function preload(){
 
 function setup() {
   setupControls();
+  let pd = pixelDensity();
+  let w = select('#canvas_div').width*pd+40*pd;
+  w = constrain(w,100,3840);
+  let h = select('#canvas_div').height*pd-40*pd;
+  h = constrain(h,100,3840);
+  select('#width').value(w);
+  select('#height').value(h);
+  
+
   calcCnvSize();
   CNV = createCanvas(cnvW, cnvH, WEBGL);
   CNV.parent(select('#canvas_div'));
+  fixCnvStyles();
   
-  currentTex = createFramebuffer({ format: FLOAT });
-  prevTex = createFramebuffer({ format: FLOAT });
-  backupTex = createFramebuffer({ format: FLOAT });
+  currentTex = createFramebuffer({ format: FLOAT, textureFiltering: NEAREST});
+  prevTex = createFramebuffer({ format: FLOAT, textureFiltering: NEAREST });
+  backupTex = createFramebuffer({ format: FLOAT, textureFiltering: NEAREST });
   clearDataTexture();
 
   CNV.mousePressed(()=> {
@@ -34,11 +44,14 @@ function setup() {
   });
   
   noStroke();
-  noLoop();
 }
 
 function draw() {
-  if (isDrawingSVG){
+  // weird fix of a weird visual bug
+  if(frameCount < 4) clearDataTexture();
+  if(frameCount === 4) noLoop();
+
+  if (isDrawingSVG && frameCount > 4){
     let p = PATHS[pathCounter];
     let a = p[ptCounter];
     let b = p[constrain(ptCounter+1, 0, p.length-1)];
@@ -111,6 +124,15 @@ function mouseReleased(){
   segmentCounter++;
 }
 
+function windowResized(){
+  fixCnvStyles();
+}
+
+
+
+
+
+
 function hexToRgb(hex) {
   if (hex.charAt(0) === '#') hex = hex.substr(1);
   let r = parseInt(hex.substring(0, 2), 16);
@@ -131,6 +153,21 @@ function calcCnvSize(){
   } else {
     cnvH = maxH;
     cnvW = cnvH/k;
+  }
+}
+
+function fixCnvStyles(){
+  let settingDivW = select('#settings_div').width;
+  let maxH = windowHeight-40;
+  let maxW = windowWidth-settingDivW-40;
+  let k1 = maxH/maxW;
+  let k = select('#height').value() / select('#width').value();
+  if(k1>k){
+    CNV.style('width', '100%');
+    CNV.style('height', 'auto');
+  } else {
+    CNV.style('width', 'auto');
+    CNV.style('height', '100%');
   }
 }
 
