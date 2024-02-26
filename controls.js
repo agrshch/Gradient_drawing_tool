@@ -171,9 +171,9 @@ function clearDataTexture(){
   backupTex.draw (()=>background(255,255,0));
   redraw();
 
-
-  select('#undo_btn').attribute("disabled", '');
   ctrlS();
+  select('#undo_btn').attribute("disabled", '');
+  
   A=[-1,-1,-1];
   B=[-1,-1,-2];
 
