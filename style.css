@@ -276,6 +276,7 @@ button:disabled, .file-upload-button:disabled{
 
 
 #info{
+  user-select: text;
   margin-top: var(--margins);
   font-size: 11px;
 }
